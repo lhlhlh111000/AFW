@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+//apply from: '../deploy.gradle'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -29,4 +30,9 @@ dependencies {
     api rootProject.ext.dependencies.retrofit
     api rootProject.ext.dependencies["converter-gson"]
     api rootProject.ext.dependencies["adapter-rxjava"]
+}
+
+ext {
+    artifactId = NETWORK_ARTIFACT_ID
+    versionName = NETWORK_VERSION
 }

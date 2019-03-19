@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+//apply from: '../deploy.gradle'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -32,4 +33,9 @@ dependencies {
     //rx管理View的生命周期
     api rootProject.ext.dependencies.rxlifecycle
     api rootProject.ext.dependencies["rxlifecycle-components"]
+}
+
+ext {
+    artifactId = TASK_ARTIFACT_ID
+    versionName = TASK_VERSION
 }
