@@ -35,7 +35,7 @@ public class MultiDexCentre {
         return config;
     }
 
-    static class MultiDexPreLoadConfig {
+    public static class MultiDexPreLoadConfig {
 
         private int loadResId;
 
