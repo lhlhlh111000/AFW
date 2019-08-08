@@ -26,4 +26,5 @@ dependencies {
     api project(':ui')
     api project(':network')
     api project(':task')
+    api project(':permission')
 }

@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+//apply from: '../deploy.gradle'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    // 这边直接引入开源权限基础库
+    api 'com.yanzhenjie.permission:support:2.0.1'
+}
