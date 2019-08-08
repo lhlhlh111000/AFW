@@ -1,9 +1,11 @@
 package com.lease.framework.biz.test;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 
 import com.lease.framework.core.ToastUtils;
 import com.lease.fw.ui.act.TaoqiActivity;
@@ -43,6 +45,7 @@ public class TestActivity extends TaoqiActivity<TestViewModel> {
             @Override
             public void onAction() {
                 ToastUtils.showToast(TestActivity.this, "联系客服");
+                showAlertDialog();
             }
         });
         return actions;
@@ -69,5 +72,24 @@ public class TestActivity extends TaoqiActivity<TestViewModel> {
         Fragment fragment = Fragment.instantiate(this, TestFragment.class.getName());
         ft.replace(R.id.frl_container, fragment);
         ft.commitAllowingStateLoss();
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Tips")
+                .setMessage("Message")
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+
     }
 }
