@@ -141,7 +141,7 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
     /**
      * view设置
      */
-    protected void setupView() { }
+    protected void setupView() {}
 
     /**
      * view观察者设置
@@ -259,11 +259,11 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
      * @param bundle        跳转所携带的信息
      */
     public void startContainerActivity(String canonicalName, Bundle bundle) {
-//        Intent intent = new Intent(this, ContainerActivity.class);
-//        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
-//        if (bundle != null) {
-//            intent.putExtra(ContainerActivity.BUNDLE, bundle);
-//        }
-//        startActivity(intent);
+        Intent intent = new Intent(this, ContainerActivity.class);
+        intent.putExtra(ContainerActivity.F_NAME, canonicalName);
+        if (bundle != null) {
+            intent.putExtra(ContainerActivity.F_BUNDLE, bundle);
+        }
+        startActivity(intent);
     }
 }

@@ -1,23 +1,27 @@
 package com.lease.framework.biz.test;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.lease.fw.ui.act.TaoqiActivity;
+import com.lease.fw.ui.base.BaseViewModel;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends TaoqiActivity<BaseViewModel> {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int obtainContentLayout() {
+        return R.layout.activity_main;
+    }
 
+    @Override
+    protected void setupView() {
+        super.setupView();
         findViewById(R.id.btn_switch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 testPermission();
+            }
+        });
+        findViewById(R.id.btn_container_activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("hello_msg", "这是传递参数");
+                startContainerActivity(TestContainerFragment.class.getCanonicalName(), bundle);
             }
         });
     }

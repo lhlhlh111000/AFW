@@ -1,2 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lease.fw.ui" />
+    package="com.lease.fw.ui" >
+
+    <application>
+        <activity android:name=".act.ContainerActivity"/>
+    </application>
+</manifest>
+
+

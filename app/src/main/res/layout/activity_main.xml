@@ -28,4 +28,10 @@
         android:layout_height="wrap_content"
         android:text="permission"/>
 
+    <Button
+        android:id="@+id/btn_container_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="container"/>
+
 </LinearLayout>
