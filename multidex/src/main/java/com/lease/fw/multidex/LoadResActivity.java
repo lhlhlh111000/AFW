@@ -2,14 +2,10 @@ package com.lease.fw.multidex;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.lease.framework.core.LogUtils;
-
 
 /**
  * 欢迎页面activity

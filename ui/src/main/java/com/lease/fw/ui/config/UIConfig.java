@@ -7,13 +7,10 @@ public class UIConfig {
 
     private TitleBarConfig titleBarConfig;
 
-    private LifecycleConfig lifecycleConfig;
-
     private StatusBarConfig statusBarConfig;
 
     private UIConfig(Builder builder) {
         setTitleBarConfig(builder.titleBarConfig);
-        setLifecycleConfig(builder.lifecycleConfig);
         setStatusBarConfig(builder.statusBarConfig);
     }
 
@@ -23,14 +20,6 @@ public class UIConfig {
 
     public void setTitleBarConfig(TitleBarConfig titleBarConfig) {
         this.titleBarConfig = titleBarConfig;
-    }
-
-    public LifecycleConfig getLifecycleConfig() {
-        return lifecycleConfig;
-    }
-
-    public void setLifecycleConfig(LifecycleConfig lifecycleConfig) {
-        this.lifecycleConfig = lifecycleConfig;
     }
 
     public StatusBarConfig getStatusBarConfig() {
@@ -43,7 +32,6 @@ public class UIConfig {
 
     public static final class Builder {
         private TitleBarConfig titleBarConfig;
-        private LifecycleConfig lifecycleConfig;
         private StatusBarConfig statusBarConfig;
 
         public Builder() {
@@ -51,11 +39,6 @@ public class UIConfig {
 
         public Builder titleBarConfig(TitleBarConfig val) {
             titleBarConfig = val;
-            return this;
-        }
-
-        public Builder lifecycleConfig(LifecycleConfig val) {
-            lifecycleConfig = val;
             return this;
         }
 

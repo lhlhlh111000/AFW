@@ -8,9 +8,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
-
-import com.lease.framework.core.LogUtils;
-import com.lease.framework.core.StringUtils;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -31,7 +29,7 @@ public class PackageUtil {
         try {
             return pm.getPackageInfo(context.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtils.e(e.getLocalizedMessage());
+            Log.e(TAG, e.getLocalizedMessage());
         }
         return  new PackageInfo();
     }
@@ -67,7 +65,7 @@ public class PackageUtil {
         try {
             return pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtils.e(e.getLocalizedMessage());
+            Log.e(TAG, e.getLocalizedMessage());
         }
         return  new PackageInfo();
     }
@@ -116,7 +114,7 @@ public class PackageUtil {
             List<ActivityManager.RunningTaskInfo> services = am.getRunningTasks(Integer.MAX_VALUE);
             String package_other = services.get(0).topActivity.getPackageName().toString();
             String package_mine = context.getPackageName().toString();
-            LogUtils.d(TAG, "onStop getClass().package_other()：" + package_other + "-------->package_mine:" + package_mine);
+            Log.d(TAG, "onStop getClass().package_other()：" + package_other + "-------->package_mine:" + package_mine);
             //同一包名
             if(package_other.equalsIgnoreCase(package_mine)
                     //|| package_other.contains("tencent")
@@ -189,7 +187,7 @@ public class PackageUtil {
      */
     public static void startApp(Context context,String packageName){
         try{
-            if(StringUtils.isNull(packageName))
+            if(TextUtils.isEmpty(packageName))
                 return;
             if(!isAppInstalled(context,packageName))
                 return;

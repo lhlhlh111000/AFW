@@ -4,7 +4,6 @@ public class MultiDexCentre {
 
     private static MultiDexCentre sInstance;
 
-
     private MultiDexPreLoadConfig config;
 
     private MultiDexCentre() {}
@@ -20,7 +19,6 @@ public class MultiDexCentre {
 
         return sInstance;
     }
-
 
     public void setPreLoadConfig(MultiDexPreLoadConfig config) {
         this.config = config;

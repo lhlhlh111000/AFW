@@ -1,9 +1,7 @@
 package com.lease.framework.biz.test;
 
 import android.os.Build;
-
-import com.lease.framework.core.StringUtils;
-import com.lease.framework.core.UniqueIdUtils;
+import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -41,14 +39,14 @@ public class HeaderUtils {
         String versionCode = 360 + "";
         String os = "Android";
         String osV = Build.VERSION.SDK_INT + "";
-        String uuid = UniqueIdUtils.getUniqueId(TestApplication.getContext());
-        uuid = null == uuid ? "" : uuid;
-        String imei = UniqueIdUtils.getDeviceInfoByType(TestApplication.getContext(), UniqueIdUtils.DEVICES_INFO.IMEI);
-        imei = null == imei ? "" : imei;
-        String mac = UniqueIdUtils.getDeviceInfoByType(TestApplication.getContext(), UniqueIdUtils.DEVICES_INFO.MAC);
-        mac = null == mac ? "" : mac;
-        String androidId = UniqueIdUtils.getDeviceInfoByType(TestApplication.getContext(), UniqueIdUtils.DEVICES_INFO.ANDROID_ID);
-        androidId = null == androidId ? "" : androidId;
+//        String uuid = UniqueIdUtils.getUniqueId(TestApplication.getContext());
+//        uuid = null == uuid ? "" : uuid;
+//        String imei = UniqueIdUtils.getDeviceInfoByType(TestApplication.getContext(), UniqueIdUtils.DEVICES_INFO.IMEI);
+//        imei = null == imei ? "" : imei;
+//        String mac = UniqueIdUtils.getDeviceInfoByType(TestApplication.getContext(), UniqueIdUtils.DEVICES_INFO.MAC);
+//        mac = null == mac ? "" : mac;
+//        String androidId = UniqueIdUtils.getDeviceInfoByType(TestApplication.getContext(), UniqueIdUtils.DEVICES_INFO.ANDROID_ID);
+//        androidId = null == androidId ? "" : androidId;
         String osName = Build.MODEL;
         String channel = "0";
 
@@ -56,10 +54,10 @@ public class HeaderUtils {
         protocol.put("client_v", clientV);
         protocol.put("os", os);
         protocol.put("os_v", osV);
-        protocol.put("uuid", uuid);
-        protocol.put("imei", imei);
-        protocol.put("mac", mac);
-        protocol.put("android_id", androidId);
+//        protocol.put("uuid", uuid);
+//        protocol.put("imei", imei);
+//        protocol.put("mac", mac);
+//        protocol.put("android_id", androidId);
         protocol.put("os_name", osName);
         protocol.put("ch_id", channel);
         return protocol;
@@ -85,7 +83,7 @@ public class HeaderUtils {
         protocol.put("token", null != token ? token : "");
         protocol.put("user_type", null != userType ? userType : "");
         protocol.put("isLogin", isLogin + "");
-        protocol.put("phone", StringUtils.isEmpty(userDO.getPhoneNum()) ? "" : userDO.getPhoneNum());
+        protocol.put("phone", TextUtils.isEmpty(userDO.getPhoneNum()) ? "" : userDO.getPhoneNum());
 
         return protocol;
     }

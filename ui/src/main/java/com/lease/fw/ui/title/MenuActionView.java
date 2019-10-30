@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.lease.framework.core.ToastUtils;
 import com.lease.fw.ui.R;
 import com.lease.fw.ui.config.MenuAction;
 import com.lease.fw.ui.config.TitleBarConfig;
@@ -68,7 +68,7 @@ public class MenuActionView extends LinearLayout {
             setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    ToastUtils.showToast(getContext(), action.menuText);
+                    Toast.makeText(getContext(), action.menuText, Toast.LENGTH_SHORT).show();
                     return false;
                 }
             });

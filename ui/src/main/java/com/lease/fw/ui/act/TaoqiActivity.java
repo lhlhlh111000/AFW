@@ -1,6 +1,5 @@
 package com.lease.fw.ui.act;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
@@ -8,78 +7,51 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.lease.fw.ui.R;
 import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.base.BaseViewModel;
-import com.lease.fw.ui.config.LifecycleObserver;
-import com.lease.fw.ui.config.MenuAction;
 import com.lease.fw.ui.config.StatusBarConfig;
-import com.lease.fw.ui.config.TitleBarConfig;
-import com.lease.fw.ui.title.TitleBarView;
 import com.lease.fw.ui.utils.LightStatusBarUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
+/**
+ * 基础承载页面
+ * @param <VM>
+ */
 public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompatActivity {
 
     protected VM viewModel;
-
-    protected TitleBarView titleBarView;
-
-    protected MutableLiveData<TitleBarConfig> titleBarConfig = new MutableLiveData<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.initStatusBar();
-        this.doObserverLifecycle(0);
-        this.initContentView();
-        this.initTitleBar();
         this.initViewModel();
-        this.registerUIChangeLiveDataCallBack();
-        this.initParams();
-        this.setupView();
-        this.initViewObservable();
-        this.initData();
+        if(obtainContentLayout() > 0) {
+            setContentView(obtainContentLayout());
+        }
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        this.doObserverLifecycle(1);
+    public void setContentView(View view) {
+        super.setContentView(view);
+        doInit();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        this.doObserverLifecycle(2);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        this.doObserverLifecycle(3);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        this.doObserverLifecycle(4);
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        doInit();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.doObserverLifecycle(5);
         getLifecycle().removeObserver(viewModel);
     }
 
@@ -97,61 +69,14 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
         }
     }
 
-    private void initContentView() {
-        if(!needTitle()) {
-            setContentView(R.layout.layout_base_no_title);
-        }else {
-            if(isOverlayTitle()) {
-                setContentView(R.layout.layout_overlay_base);
-            }else {
-                setContentView(R.layout.layout_base);
-            }
-        }
-
-        View contentView = LayoutInflater.from(this).inflate(obtainContentLayout(), null);
-        if(null != contentView) {
-            ((ViewGroup) findViewById(R.id.layout_base_container)).addView(contentView,
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        }
+    private void doInit() {
+        this.registerUIChangeLiveDataCallBack();
+        this.initParams();
+        this.setupView();
+        this.initViewObservable();
+        this.initData();
     }
 
-    private void initTitleBar() {
-        if(!needTitle()) {
-            return;
-        }
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // 获取titleBar view
-        if(-1 == obtainTitleBarLayout()) {
-            titleBarView = (TitleBarView) toolbar.getChildAt(0);
-        }else {
-            toolbar.removeAllViews();
-            titleBarView = (TitleBarView) LayoutInflater.from(this).inflate(obtainTitleBarLayout(), null);
-            toolbar.addView(titleBarView, Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
-        }
-
-        // 配置标题栏
-        if(null == titleBarConfig.getValue()) {
-            titleBarConfig.setValue(UICentre.getInstance().getUiConfig().getTitleBarConfig());
-        }
-        // 右侧菜单栏
-        TitleBarConfig config = titleBarConfig.getValue();
-        config.setActions(buildMenuActions());
-
-        // 构建菜单栏
-        titleBarView.setupTitleBarConfig(config, viewModel);
-        titleBarConfig.observe(this, new Observer<TitleBarConfig>() {
-            @Override
-            public void onChanged(@Nullable TitleBarConfig config) {
-                TitleBarConfig config1 = titleBarConfig.getValue();
-                config1.setActions(buildMenuActions());
-                titleBarView.setupTitleBarConfig(config1, viewModel);
-            }
-        });
-
-        updateTitleBarConfig();
-    }
 
     private void initViewModel() {
         this.viewModel = setupViewModel();
@@ -180,52 +105,6 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
     protected StatusBarConfig buildStatusBarConfig() {
         return null;
     }
-
-
-    // 标题栏部分
-    /**
-     * 是否需要标题
-     * @return
-     */
-    protected boolean needTitle() {
-        return true;
-    }
-
-    /**
-     * 是否覆盖式标题
-     * @return
-     */
-    protected boolean isOverlayTitle() {
-        return false;
-    }
-
-    /**
-     * 设置titleBar view
-     * @return titleBar view
-     */
-    protected int obtainTitleBarLayout() {
-        return -1;
-    }
-
-    /**
-     * 更新标题栏配置信息
-     */
-    protected void updateTitleBarConfig() {}
-
-    /**
-     * 构建右侧菜单列表
-     * @return
-     */
-    protected List<MenuAction> buildMenuActions() {
-        return null;
-    }
-
-
-
-
-
-
-
 
 
 
@@ -274,62 +153,6 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
      */
     protected void initData() {}
 
-
-
-
-
-    // 生命周期观察相关
-    /**
-     * 是否需要观察生命周期
-     * @return
-     */
-    protected boolean needObserverLifecycle() {
-        return true;
-    }
-
-    /**
-     * 获取观察对象class类型
-     * @return
-     */
-    protected Class obtainLifecycleClass() {
-        return this.getClass();
-    }
-
-    /**
-     * 观察生命周期
-     */
-    private final void doObserverLifecycle(int actionStep) {
-        if(!needObserverLifecycle()) {
-            return;
-        }
-        if(null == UICentre.getInstance().getUiConfig().getLifecycleConfig()
-                || null == UICentre.getInstance().getUiConfig().getLifecycleConfig().getObservers()) {
-
-        }
-
-        for(LifecycleObserver observer : UICentre.getInstance().getUiConfig().getLifecycleConfig().getObservers()) {
-            switch(actionStep) {
-                case 0:
-                    observer.onCreate(obtainLifecycleClass());
-                    break;
-                case 1:
-                    observer.onStart(obtainLifecycleClass());
-                    break;
-                case 2:
-                    observer.onResume(obtainLifecycleClass());
-                    break;
-                case 3:
-                    observer.onPause(obtainLifecycleClass());
-                    break;
-                case 4:
-                    observer.onStop(obtainLifecycleClass());
-                    break;
-                case 5:
-                    observer.onDestroy(obtainLifecycleClass());
-                    break;
-            }
-        }
-    }
 
 
     //注册ViewModel与View的契约UI回调事件

@@ -1,6 +1,7 @@
 package com.lease.fw.ui.title;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -10,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lease.framework.core.StringUtils;
 import com.lease.fw.ui.R;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.config.MenuAction;
@@ -71,7 +71,7 @@ public class DefaultTitleBarView extends TitleBarView {
         // 标题文字
         tvTitle.setTextColor(this.titleBarConfig.getTitleTextColor());
         tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, this.titleBarConfig.getTitleTextSize());
-        if(StringUtils.isNotEmpty(titleBarConfig.getTitleText())) {
+        if(!TextUtils.isEmpty(titleBarConfig.getTitleText())) {
             tvTitle.setText(titleBarConfig.getTitleText());
         }
         LayoutParams params = (LayoutParams) tvTitle.getLayoutParams();

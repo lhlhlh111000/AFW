@@ -67,11 +67,11 @@ public class BaseViewModel extends AndroidViewModel implements LifecycleObserver
     }
 
     public void showDialog(String title) {
-        uc.showDialogEvent.postValue(title);
+        getUC().getShowDialogEvent().postValue(title);
     }
 
     public void dismissDialog() {
-        uc.dismissDialogEvent.call();
+        getUC().getDismissDialogEvent().call();
     }
 
     /**
@@ -95,7 +95,7 @@ public class BaseViewModel extends AndroidViewModel implements LifecycleObserver
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
         }
-        uc.startActivityEvent.postValue(params);
+        getUC().getStartActivityEvent().postValue(params);
     }
 
     /**
@@ -119,21 +119,21 @@ public class BaseViewModel extends AndroidViewModel implements LifecycleObserver
         if (bundle != null) {
             params.put(ParameterField.BUNDLE, bundle);
         }
-        uc.startContainerActivityEvent.postValue(params);
+        getUC().getStartContainerActivityEvent().postValue(params);
     }
 
     /**
      * 关闭界面
      */
     public void finish() {
-        uc.finishEvent.call();
+        getUC().getFinishEvent().call();
     }
 
     /**
      * 返回上一层
      */
     public void onBackPressed() {
-        uc.onBackPressedEvent.call();
+        getUC().getOnBackPressedEvent().call();
     }
 
 

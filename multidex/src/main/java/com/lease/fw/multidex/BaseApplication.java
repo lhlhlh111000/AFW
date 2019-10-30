@@ -8,11 +8,9 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
-
-import com.lease.framework.core.LogUtils;
-import com.lease.framework.core.StringUtils;
+import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,11 +67,12 @@ public class BaseApplication extends Application {
     }
 
     public static boolean quickStart(Context context) {
-        if (StringUtils.contains(getCurProcessName(context), ":mini")) {
-            LogUtils.d("loadDex", ":mini start!");
-            return true;
+        String curProcessName = getCurProcessName(context);
+        if(TextUtils.isEmpty(curProcessName)) {
+            return false;
         }
-        return false;
+
+        return curProcessName.contains(":mini");
     }
 
 
@@ -84,15 +83,14 @@ public class BaseApplication extends Application {
 
     protected boolean has2Dex(Context context) {
         String sha1 = get2thDexSHA1(context);
-        return StringUtils.isNotEmpty(sha1);
+        return !TextUtils.isEmpty(sha1);
     }
 
-    @NonNull
     private File getFlagFile(Context context) {
         String flag = Uri.encode(get2thDexSHA1(context));
-        LogUtils.d(sTAG, "dex2-sha1 " + flag);
+        Log.d(sTAG, "dex2-sha1 " + flag);
         File file = new File(context.getFilesDir() + "/" + flag);
-        LogUtils.d(sTAG, "need file exist?" + file.exists());
+        Log.d(sTAG, "need file exist?" + file.exists());
         return file;
     }
 
@@ -103,13 +101,13 @@ public class BaseApplication extends Application {
             List<ActivityManager.RunningTaskInfo> list = activityManager.getRunningTasks(1);
             if (list != null && !list.isEmpty()) {
                 PackageInfo packageInfo = PackageUtil.getPackageInfo(context);
-                if (StringUtils.equals(list.get(0).topActivity.getPackageName(),
-                        packageInfo.packageName)) {
+                if(list.get(0).topActivity.getPackageName()
+                        .equals(packageInfo.packageName)) {
                     return true;
                 }
             }
         } catch (Exception e) {
-            LogUtils.e(e.getLocalizedMessage());
+            Log.e(sTAG, e.getLocalizedMessage());
         }
 
         return false;
@@ -171,9 +169,9 @@ public class BaseApplication extends Application {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                LogUtils.d(sTAG, "create file");
+                Log.d(sTAG, "create file");
             } catch (IOException e) {
-                LogUtils.e(sTAG, e.getLocalizedMessage());
+                Log.e(sTAG, e.getLocalizedMessage());
             }
         }
     }
@@ -212,7 +210,7 @@ public class BaseApplication extends Application {
         while (needWait(base)) {
             try {
                 long nowWait = System.currentTimeMillis() - startWait;
-                LogUtils.d("loadDex", "wait ms :" + nowWait);
+                Log.d("loadDex", "wait ms :" + nowWait);
                 if (nowWait >= waitTime) {
                     return;
                 }

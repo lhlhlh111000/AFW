@@ -1,6 +1,5 @@
 package com.lease.fw.ui.frg;
 
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
@@ -9,49 +8,40 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.lease.fw.ui.R;
-import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.base.BaseViewModel;
-import com.lease.fw.ui.config.MenuAction;
-import com.lease.fw.ui.config.TitleBarConfig;
-import com.lease.fw.ui.title.TitleBarView;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
+/**
+ * 基础Fragment
+ * @param <VM>
+ */
 public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment {
 
     protected VM viewModel;
 
-    protected TitleBarView titleBarView;
-
-    protected MutableLiveData<TitleBarConfig> titleBarConfig = new MutableLiveData<>();
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.initViewModel();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return this.initContentView(inflater, container, savedInstanceState);
+        return inflater.inflate(obtainContentLayout(), container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.initTitleBar(view);
-        this.initViewModel();
         this.registerUIChangeLiveDataCallBack();
         this.initParams();
         this.setupView();
@@ -63,64 +53,6 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
     public void onDestroy() {
         super.onDestroy();
         getLifecycle().removeObserver(viewModel);
-    }
-
-    private View initContentView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view;
-        if(!needTitle()) {
-            view = inflater.inflate(R.layout.layout_base_no_title, container, false);
-        }else {
-            if(isOverlayTitle()) {
-                view = inflater.inflate(R.layout.layout_overlay_base, container, false);
-            }else {
-                view = inflater.inflate(R.layout.layout_base, container, false);
-            }
-        }
-
-        View contentView = LayoutInflater.from(getActivity()).inflate(obtainContentLayout(), null);
-        if(null != contentView) {
-            ((ViewGroup) view.findViewById(R.id.layout_base_container)).addView(contentView,
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        }
-        return view;
-    }
-
-    private void initTitleBar(View view) {
-        if(!needTitle()) {
-            return;
-        }
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-        // 获取titleBar view
-        if(-1 == obtainTitleBarLayout()) {
-            titleBarView = (TitleBarView) toolbar.getChildAt(0);
-        }else {
-            toolbar.removeAllViews();
-            titleBarView = (TitleBarView) LayoutInflater.from(getActivity()).inflate(obtainTitleBarLayout(), null);
-            toolbar.addView(titleBarView, Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
-        }
-
-        // 配置标题栏
-        if(null == titleBarConfig.getValue()) {
-            titleBarConfig.setValue(UICentre.getInstance().getUiConfig().getTitleBarConfig());
-        }
-        // 右侧菜单栏
-        TitleBarConfig config = titleBarConfig.getValue();
-        config.setActions(buildMenuActions());
-
-        // 构建菜单栏
-        titleBarView.setupTitleBarConfig(config, viewModel);
-        titleBarConfig.observe(this, new Observer<TitleBarConfig>() {
-            @Override
-            public void onChanged(@Nullable TitleBarConfig config) {
-                TitleBarConfig config1 = titleBarConfig.getValue();
-                config1.setActions(buildMenuActions());
-                titleBarView.setupTitleBarConfig(config1, viewModel);
-            }
-        });
-
-        updateTitleBarConfig();
     }
 
     private void initViewModel() {
@@ -144,59 +76,6 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
         getLifecycle().addObserver(viewModel);
         viewModel.injectLifecycleProvider(this);
     }
-
-
-
-
-    // 标题栏部分
-    /**
-     * 是否需要标题
-     * @return
-     */
-    protected boolean needTitle() {
-        return true;
-    }
-
-    /**
-     * 是否覆盖式标题
-     * @return
-     */
-    protected boolean isOverlayTitle() {
-        return false;
-    }
-
-    /**
-     * 设置titleBar view
-     * @return titleBar view
-     */
-    protected int obtainTitleBarLayout() {
-        return -1;
-    }
-
-    /**
-     * 更新标题栏配置信息
-     */
-    protected void updateTitleBarConfig() {}
-
-    /**
-     * 构建右侧菜单列表
-     * @return
-     */
-    protected List<MenuAction> buildMenuActions() {
-        return null;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // 业务相关
