@@ -2,13 +2,11 @@ apply plugin: 'com.android.library'
 //apply from: '../deploy.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -27,7 +25,6 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     api rootProject.ext.support['multidex']
-    api 'com.lease.framework:core:1.0.2'
 }
 
 ext {
