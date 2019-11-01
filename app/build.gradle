@@ -27,4 +27,7 @@ dependencies {
     api project(':network')
     api project(':task')
     api project(':permission')
+    api rootProject.ext.support['recyclerview-v7']
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
 }

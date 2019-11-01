@@ -48,6 +48,13 @@ public class MainActivity extends TaoqiActivity<BaseViewModel> {
                 startContainerActivity(TestContainerFragment.class.getCanonicalName(), bundle);
             }
         });
+
+        findViewById(R.id.btn_list).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startContainerActivity(ListFragment.class.getCanonicalName());
+            }
+        });
     }
 
     private void testPermission() {

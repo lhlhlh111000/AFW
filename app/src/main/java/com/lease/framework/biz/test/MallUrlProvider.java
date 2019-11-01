@@ -6,7 +6,7 @@ public class MallUrlProvider implements BaseUrlProvider {
 
     @Override
     public String baseUrlProvide() {
-        return "http://dev.mall.taoqicar.com:8080";
+        return "http://api.taoqicar.com";
     }
 
     @Override
