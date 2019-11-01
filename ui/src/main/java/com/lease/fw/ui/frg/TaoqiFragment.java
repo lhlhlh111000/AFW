@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lease.fw.ui.BuildConfig;
+import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.act.ContainerActivity;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -19,6 +21,8 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
+
+import butterknife.ButterKnife;
 
 /**
  * 基础Fragment
@@ -43,6 +47,9 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(BuildConfig.isButterKnife) {
+            ButterKnife.bind(this, view);
+        }
         this.registerUIChangeLiveDataCallBack();
         this.initParams();
         this.setupView();
@@ -175,18 +182,17 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
     }
 
     public void showDialog(String title) {
-//        if (dialog != null) {
-//            dialog.show();
-//        } else {
-//            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(this, title, true);
-//            dialog = builder.show();
-//        }
+        UICentre.getInstance()
+                .getUiConfig()
+                .getLoadingDialogConfig()
+                .showLoadingDialog(getActivity(), title);
     }
 
     public void dismissDialog() {
-//        if (dialog != null && dialog.isShowing()) {
-//            dialog.dismiss();
-//        }
+        UICentre.getInstance()
+                .getUiConfig()
+                .getLoadingDialogConfig()
+                .dismissDialog();
     }
 
     /**

@@ -9,9 +9,12 @@ public class UIConfig {
 
     private StatusBarConfig statusBarConfig;
 
+    private LoadingDialogConfig loadingDialogConfig;
+
     private UIConfig(Builder builder) {
         setTitleBarConfig(builder.titleBarConfig);
         setStatusBarConfig(builder.statusBarConfig);
+        setLoadingDialogConfig(builder.loadingDialogConfig);
     }
 
     public TitleBarConfig getTitleBarConfig() {
@@ -30,9 +33,18 @@ public class UIConfig {
         this.statusBarConfig = statusBarConfig;
     }
 
+    public LoadingDialogConfig getLoadingDialogConfig() {
+        return loadingDialogConfig;
+    }
+
+    public void setLoadingDialogConfig(LoadingDialogConfig loadingDialogConfig) {
+        this.loadingDialogConfig = loadingDialogConfig;
+    }
+
     public static final class Builder {
         private TitleBarConfig titleBarConfig;
         private StatusBarConfig statusBarConfig;
+        private LoadingDialogConfig loadingDialogConfig;
 
         public Builder() {
         }
@@ -44,6 +56,11 @@ public class UIConfig {
 
         public Builder statusBarConfig(StatusBarConfig val) {
             statusBarConfig = val;
+            return this;
+        }
+
+        public Builder loadingDialogConfig(LoadingDialogConfig val) {
+            loadingDialogConfig = val;
             return this;
         }
 

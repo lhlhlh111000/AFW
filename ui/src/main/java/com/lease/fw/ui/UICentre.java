@@ -1,6 +1,9 @@
 package com.lease.fw.ui;
 
+import android.content.Context;
+
 import com.lease.fw.ui.config.DefaultTitleBarConfig;
+import com.lease.fw.ui.config.LoadingDialogConfig;
 import com.lease.fw.ui.config.StatusBarConfig;
 import com.lease.fw.ui.config.TitleBarConfig;
 import com.lease.fw.ui.config.UIConfig;
@@ -38,6 +41,7 @@ public class UICentre {
             UIConfig.Builder builder = new UIConfig.Builder();
             builder.titleBarConfig(buildDefaultTitleBarConfig());
             builder.statusBarConfig(buildDefaultStatusBarConfig());
+            builder.loadingDialogConfig(buildDefaultLoadingDialogConfig());
             this.uiConfig = builder.build();
         }
         if(null == this.uiConfig.getTitleBarConfig()) {
@@ -45,6 +49,9 @@ public class UICentre {
         }
         if(null == this.uiConfig.getStatusBarConfig()) {
             this.uiConfig.setStatusBarConfig(buildDefaultStatusBarConfig());
+        }
+        if(null == this.uiConfig.getLoadingDialogConfig()) {
+            this.uiConfig.setLoadingDialogConfig(buildDefaultLoadingDialogConfig());
         }
         return this.uiConfig;
     }
@@ -56,5 +63,19 @@ public class UICentre {
     private StatusBarConfig buildDefaultStatusBarConfig() {
         return new StatusBarConfig.Builder()
                 .isLightStatus(true).build();
+    }
+
+    private LoadingDialogConfig buildDefaultLoadingDialogConfig() {
+        return new LoadingDialogConfig(){
+            @Override
+            public void showLoadingDialog(Context context, String title) {
+                // Do nothing
+            }
+
+            @Override
+            public void dismissDialog() {
+                // Do nothing
+            }
+        };
     }
 }

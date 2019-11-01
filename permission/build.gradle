@@ -18,5 +18,5 @@ android {
 
 dependencies {
     // 这边直接引入开源权限基础库
-    api 'com.yanzhenjie.permission:support:2.0.1'
+    api rootProject.ext.dependencies.permission
 }

@@ -1,14 +1,15 @@
 apply plugin: 'com.android.library'
 //apply from: '../deploy.gradle'
 
+def isButterKnife = project.hasProperty("useButterKnife") ? project.hasProperty("useButterKnife") : false
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        // 定义是否启用ButterKnife
+        buildConfigField("Boolean","isButterKnife", "${isButterKnife}")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,9 +31,13 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies['lifecycle-compiler']
     //rx管理View的生命周期
     api rootProject.ext.dependencies.rxlifecycle
-    api rootProject.ext.dependencies["rxlifecycle-components"]
-
-//    api 'com.lease.framework:core:1.0.2'
+    api rootProject.ext.dependencies['rxlifecycle-android']
+    api rootProject.ext.dependencies['rxlifecycle-components']
+    // smart-refresh-layout
+    api rootProject.ext.dependencies['refresh-layout']
+    api rootProject.ext.dependencies['header-classics']
+    // butterknife
+    compileOnly rootProject.ext.dependencies.butterknife
 }
 
 ext {

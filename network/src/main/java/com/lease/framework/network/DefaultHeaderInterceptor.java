@@ -27,7 +27,11 @@ public class DefaultHeaderInterceptor implements Interceptor {
             Iterator var4 = keys.iterator();
             while(var4.hasNext()) {
                 String headerKey = (String)var4.next();
-                builder.addHeader(headerKey, headerProvider.headerProvide().get(headerKey));
+                String head = headerProvider.headerProvide().get(headerKey);
+                if(null == head) {
+                    head = "";
+                }
+                builder.addHeader(headerKey, head);
             }
         }
         return chain.proceed(builder.build());
