@@ -62,6 +62,7 @@ public class OkHttpManager {
         builder.addInterceptor(new DefaultHeaderInterceptor(buildHeaderInfo(apiClass)));
         invokeInterceptor(builder);
         builder.connectTimeout(NetworkCentre.getInstance().getNetworkConfig().getTimeout(), TimeUnit.SECONDS);
+        builder.readTimeout(NetworkCentre.getInstance().getNetworkConfig().getTimeout(), TimeUnit.SECONDS);
         builder.writeTimeout(NetworkCentre.getInstance().getNetworkConfig().getTimeout(), TimeUnit.SECONDS);
         // 设置同时连接的个数和时间，这里8个，和每个保持时间为15s
         builder.connectionPool(new ConnectionPool(8, 15, TimeUnit.SECONDS));

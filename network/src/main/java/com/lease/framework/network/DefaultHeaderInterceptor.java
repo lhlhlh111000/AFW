@@ -2,6 +2,7 @@ package com.lease.framework.network;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import okhttp3.Interceptor;
@@ -22,16 +23,19 @@ public class DefaultHeaderInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        if(null != headerProvider && null != headerProvider.headerProvide()) {
-            Set<String> keys = headerProvider.headerProvide().keySet();
-            Iterator var4 = keys.iterator();
-            while(var4.hasNext()) {
-                String headerKey = (String)var4.next();
-                String head = headerProvider.headerProvide().get(headerKey);
-                if(null == head) {
-                    head = "";
+        if(null != headerProvider) {
+            Map<String, String> headers = headerProvider.headerProvide();
+            if(null != headers) {
+                Set<String> keys = headers.keySet();
+                Iterator var4 = keys.iterator();
+                while(var4.hasNext()) {
+                    String headerKey = (String)var4.next();
+                    String head = headers.get(headerKey);
+                    if(null == head) {
+                        head = "";
+                    }
+                    builder.addHeader(headerKey, head);
                 }
-                builder.addHeader(headerKey, head);
             }
         }
         return chain.proceed(builder.build());
