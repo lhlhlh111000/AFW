@@ -3,12 +3,17 @@ package com.lease.framework.biz.test;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
 
 import com.lease.framework.network.BaseUrlProvider;
 import com.lease.framework.network.DefaultNetworkConfig;
 import com.lease.framework.network.HeaderProvider;
 import com.lease.framework.network.NetworkCentre;
 import com.lease.framework.network.NetworkConfig;
+import com.lease.fw.ui.UICentre;
+import com.lease.fw.ui.config.ToastConfig;
+import com.lease.fw.ui.config.UIConfig;
+import com.lease.fw.ui.toast.ToastUtil;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -48,6 +53,7 @@ public class TestApplication extends Application {
         context = this;
 
         initNetworkConfig();
+        initUIConfig();
     }
 
     public static Context getContext() {
@@ -68,5 +74,17 @@ public class TestApplication extends Application {
         networkConfig.setUrlProviders(urlProviders);
 
         NetworkCentre.getInstance().setNetworkConfig(networkConfig);
+    }
+
+    private void initUIConfig() {
+        ToastConfig.Builder toastBuilder = new ToastConfig.Builder();
+        toastBuilder.mode(ToastUtil.Mode.REPLACEABLE)
+                .gravity(Gravity.TOP)
+                .isCustomRes(true)
+                .customResId(R.layout.view_toast)
+                .build();
+        UIConfig.Builder builder = new UIConfig.Builder()
+                .toastConfig(toastBuilder.build());
+        UICentre.getInstance().withContext(this).setUiConfig(builder.build());
     }
 }

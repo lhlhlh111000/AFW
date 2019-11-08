@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.lease.framework.biz.test.frg.ToastFragment;
 import com.lease.fw.ui.act.TaoqiActivity;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.yanzhenjie.permission.Action;
@@ -53,6 +54,13 @@ public class MainActivity extends TaoqiActivity<BaseViewModel> {
             @Override
             public void onClick(View v) {
                 startContainerActivity(ListFragment.class.getCanonicalName());
+            }
+        });
+
+        findViewById(R.id.btn_toast).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startContainerActivity(ToastFragment.class.getCanonicalName());
             }
         });
     }

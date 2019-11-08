@@ -11,10 +11,13 @@ public class UIConfig {
 
     private LoadingDialogConfig loadingDialogConfig;
 
+    private ToastConfig toastConfig;
+
     private UIConfig(Builder builder) {
         setTitleBarConfig(builder.titleBarConfig);
         setStatusBarConfig(builder.statusBarConfig);
         setLoadingDialogConfig(builder.loadingDialogConfig);
+        setToastConfig(builder.toastConfig);
     }
 
     public TitleBarConfig getTitleBarConfig() {
@@ -41,10 +44,19 @@ public class UIConfig {
         this.loadingDialogConfig = loadingDialogConfig;
     }
 
+    public ToastConfig getToastConfig() {
+        return toastConfig;
+    }
+
+    public void setToastConfig(ToastConfig toastConfig) {
+        this.toastConfig = toastConfig;
+    }
+
     public static final class Builder {
         private TitleBarConfig titleBarConfig;
         private StatusBarConfig statusBarConfig;
         private LoadingDialogConfig loadingDialogConfig;
+        private ToastConfig toastConfig;
 
         public Builder() {
         }
@@ -61,6 +73,11 @@ public class UIConfig {
 
         public Builder loadingDialogConfig(LoadingDialogConfig val) {
             loadingDialogConfig = val;
+            return this;
+        }
+
+        public Builder toastConfig(ToastConfig val) {
+            toastConfig = val;
             return this;
         }
 
