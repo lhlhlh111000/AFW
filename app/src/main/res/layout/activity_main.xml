@@ -46,4 +46,10 @@
         android:layout_height="wrap_content"
         android:text="toast"/>
 
+    <Button
+        android:id="@+id/btn_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="status"/>
+
 </LinearLayout>

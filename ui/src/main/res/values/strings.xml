@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">UI</string>
 
-    <string name="scan">扫码</string>
-    <string name="phone">客服</string>
+    <string name="label_net_not_work">你当前网络异常</string>
+    <string name="label_page_error">页面错误</string>
+    <string name="label_not_data">暂无数据</string>
+    <string name="label_page_loading">获取数据中…</string>
+
+    <string name="hint_net_not_work">请连接网络后，点击页面重试</string>
+    <string name="hint_page_error">页面出错了，点击页面重新载入!</string>
 </resources>
