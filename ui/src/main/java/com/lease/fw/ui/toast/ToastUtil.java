@@ -73,6 +73,7 @@ public class ToastUtil {
      * @param resId The resource id of the string resource to use.
      */
     public static void show(int resId) {
+        initialize();
         show(sContext.getText(resId), false, sDefaultMode);
     }
 
@@ -82,6 +83,7 @@ public class ToastUtil {
      * @param text The text to show.
      */
     public static void show(CharSequence text) {
+        initialize();
         show(text, false, sDefaultMode);
     }
 
@@ -92,6 +94,7 @@ public class ToastUtil {
      * @param durationLong Whether the toast show for a long period of time?
      */
     public static void show(int resId, boolean durationLong) {
+        initialize();
         show(sContext.getText(resId), durationLong, sDefaultMode);
     }
 
@@ -102,6 +105,7 @@ public class ToastUtil {
      * @param durationLong Whether the toast show for a long period of time?
      */
     public static void show(CharSequence text, boolean durationLong) {
+        initialize();
         show(text, durationLong, sDefaultMode);
     }
 
@@ -112,6 +116,7 @@ public class ToastUtil {
      * @param mode  The display mode to use.  Either {@link Mode#NORMAL} or {@link Mode#REPLACEABLE}
      */
     public static void show(int resId, Mode mode) {
+        initialize();
         show(sContext.getText(resId), false, mode);
     }
 
@@ -122,6 +127,7 @@ public class ToastUtil {
      * @param mode The display mode to use.  Either {@link Mode#NORMAL} or {@link Mode#REPLACEABLE}
      */
     public static void show(CharSequence text, Mode mode) {
+        initialize();
         show(text, false, mode);
     }
 
@@ -133,6 +139,7 @@ public class ToastUtil {
      * @param mode         The display mode to use.  Either {@link Mode#NORMAL} or {@link Mode#REPLACEABLE}
      */
     public static void show(int resId, boolean durationLong, Mode mode) {
+        initialize();
         show(sContext.getText(resId), durationLong, mode);
     }
 
@@ -145,8 +152,6 @@ public class ToastUtil {
      */
     @SuppressLint("ShowToast")
     public static void show(CharSequence text, boolean durationLong, Mode mode) {
-        initialize();
-
         final int duration = durationLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT;
         if(checkIsMainThread()) {
             if (mode != Mode.REPLACEABLE) {
