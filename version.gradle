@@ -64,6 +64,8 @@ ext {
             "permission"                           : "com.yanzhenjie.permission:support:2.0.1",
             // butterknife
             "butterknife"                          : "com.jakewharton:butterknife:8.8.1",
-            "butterknife-compiler"                 : "com.jakewharton:butterknife-compiler:8.8.1"
+            "butterknife-compiler"                 : "com.jakewharton:butterknife-compiler:8.8.1",
+            // BaseRecyclerViewAdapterHelper
+            "BaseRecyclerViewAdapterHelper"        : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50"
     ]
 }

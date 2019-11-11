@@ -38,6 +38,8 @@ dependencies {
     api rootProject.ext.dependencies['header-classics']
     // butterknife
     compileOnly rootProject.ext.dependencies.butterknife
+    // BaseRecyclerViewAdapterHelper
+    api rootProject.ext.dependencies['BaseRecyclerViewAdapterHelper']
 }
 
 ext {
