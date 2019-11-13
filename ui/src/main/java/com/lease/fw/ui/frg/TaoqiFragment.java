@@ -181,6 +181,22 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
         });
     }
 
+    public void onBackPressed() {
+        if(null != getActivity() && !getActivity().isFinishing()) {
+            getActivity().onBackPressed();
+        }
+    }
+
+    public void finish() {
+        if(null != getActivity() && !getActivity().isFinishing()) {
+            getActivity().finish();
+        }
+    }
+
+    public void showDialog() {
+        showDialog("");
+    }
+
     public void showDialog(String title) {
         UICentre.getInstance()
                 .getUiConfig()

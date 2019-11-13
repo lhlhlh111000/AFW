@@ -210,6 +210,10 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
         });
     }
 
+    public void showDialog() {
+        showDialog("");
+    }
+
     public void showDialog(String title) {
         UICentre.getInstance()
                 .getUiConfig()
