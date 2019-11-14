@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.lease.fw.router.Router;
 import com.lease.fw.ui.BuildConfig;
 import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.base.BaseViewModel;
@@ -33,6 +34,9 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(BuildConfig.isRouter) {
+            Router.initParam(this);
+        }
         this.initStatusBar();
         this.initViewModel();
         if(obtainContentLayout() > 0) {

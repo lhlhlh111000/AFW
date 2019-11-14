@@ -52,4 +52,10 @@
         android:layout_height="wrap_content"
         android:text="status"/>
 
+    <Button
+        android:id="@+id/btn_param"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="param"/>
+
 </LinearLayout>

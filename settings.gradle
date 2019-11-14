@@ -1,1 +1,1 @@
-include ':app', ':ui', ':network', ':task', ':multidex', ':permission'
+include ':app', ':ui', ':network', ':task', ':multidex', ':permission', ':router'

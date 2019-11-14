@@ -1,12 +1,25 @@
 package com.lease.framework.biz.test;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.lease.fw.router.param.BindParam;
 import com.lease.fw.ui.act.TaoqiActivity;
+import com.lease.fw.ui.toast.ToastUtil;
 
 public class TestActivity extends TaoqiActivity<TestViewModel> {
+
+    @BindParam("hello")
+    public String msg;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ToastUtil.show(msg);
+    }
 
     @Override
     protected int obtainContentLayout() {

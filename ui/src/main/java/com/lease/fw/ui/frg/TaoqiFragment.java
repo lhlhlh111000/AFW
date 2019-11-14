@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lease.fw.router.Router;
 import com.lease.fw.ui.BuildConfig;
 import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.act.ContainerActivity;
@@ -35,6 +36,9 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(BuildConfig.isRouter) {
+            Router.initParam(this);
+        }
         this.initViewModel();
     }
 
