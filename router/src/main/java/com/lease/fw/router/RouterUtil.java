@@ -2,6 +2,7 @@ package com.lease.fw.router;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 
 /**
@@ -25,7 +26,7 @@ public class RouterUtil {
     }
 
     public static boolean isActivity(Class clazz) {
-        if(clazz.isAssignableFrom(Activity.class)) {
+        if(clazz.equals(Activity.class)) {
             return true;
         }else if(null != clazz.getSuperclass()) {
             return isActivity(clazz.getSuperclass());
@@ -34,7 +35,16 @@ public class RouterUtil {
     }
 
     public static boolean isFragment(Class clazz) {
-        if(clazz.isAssignableFrom(Fragment.class)) {
+        if(clazz.equals(Fragment.class)) {
+            return true;
+        }else if(null != clazz.getSuperclass()) {
+            return isFragment(clazz.getSuperclass());
+        }
+        return false;
+    }
+
+    public static boolean isDialog(Class clazz) {
+        if(clazz.equals(DialogFragment.class)) {
             return true;
         }else if(null != clazz.getSuperclass()) {
             return isFragment(clazz.getSuperclass());

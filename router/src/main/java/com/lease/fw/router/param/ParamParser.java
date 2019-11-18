@@ -64,6 +64,9 @@ public class ParamParser {
     }
 
     static void trySet(Field field, Object target, @Nullable Object value) {
+        if(null == value) {
+            return;
+        }
         try {
             field.set(target, value);
         } catch (IllegalAccessException e) {
