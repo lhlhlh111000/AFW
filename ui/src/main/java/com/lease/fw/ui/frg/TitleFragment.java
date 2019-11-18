@@ -45,7 +45,7 @@ public abstract class TitleFragment<VM extends BaseViewModel>
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        delegate.initTitleBar(this, viewModel);
+        delegate.initTitleBar(getActivity(), this, viewModel);
         super.onViewCreated(view, savedInstanceState);
     }
 

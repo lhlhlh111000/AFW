@@ -42,7 +42,7 @@ public abstract class TitleActivity<VM extends BaseViewModel>
 
     @Override
     public void setContentView(View view) {
-        delegate.initTitleBar(this, viewModel);
+        delegate.initTitleBar(this, this, viewModel);
         super.setContentView(view);
     }
 

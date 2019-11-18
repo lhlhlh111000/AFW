@@ -1,5 +1,6 @@
 package com.lease.fw.ui.title;
 
+import android.app.Activity;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
@@ -64,9 +65,11 @@ public class TitleBarDelegate<VM extends BaseViewModel> {
      * @param owner 生命周期持有者
      * @param viewModel vm
      */
-    public void initTitleBar(LifecycleOwner owner, final VM viewModel) {
+    public void initTitleBar(Activity activity, LifecycleOwner owner, final VM viewModel) {
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
-        ((AppCompatActivity) rootView.getContext()).setSupportActionBar(toolbar);
+        if(activity instanceof AppCompatActivity) {
+            ((AppCompatActivity) activity).setSupportActionBar(toolbar);
+        }
 
         // 获取titleBar view
         if(titleBarAttach.obtainTitleBarLayout() <= 0) {

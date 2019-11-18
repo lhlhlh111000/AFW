@@ -82,9 +82,10 @@ public class StatusDelegate {
             return wrapperStatusView(parent);
         }else {
             ViewGroup.LayoutParams params = view.getLayoutParams();
+            int index = parent.indexOfChild(view);
             parent.removeView(view);
             MultiStatusView multiStatusView = new MultiStatusView(view, this);
-            parent.addView(multiStatusView, params);
+            parent.addView(multiStatusView, index, params);
             return multiStatusView;
         }
     }

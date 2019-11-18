@@ -50,6 +50,7 @@ public class DefaultTitleBarView extends TitleBarView {
             return;
         }
 
+        setVisibility(titleBarConfig.getShow());
         final ImageView ivBack = findViewById(R.id.iv_back);
         if(null == ivBack) {
             return;
@@ -67,6 +68,7 @@ public class DefaultTitleBarView extends TitleBarView {
             }
         });
         ivBack.setImageResource(this.titleBarConfig.getBackIcon());
+        ivBack.setVisibility(this.titleBarConfig.getBackShow());
 
         // 标题文字
         tvTitle.setTextColor(this.titleBarConfig.getTitleTextColor());

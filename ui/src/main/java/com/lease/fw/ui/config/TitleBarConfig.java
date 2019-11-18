@@ -1,5 +1,7 @@
 package com.lease.fw.ui.config;
 
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +10,11 @@ import java.util.List;
  */
 public class TitleBarConfig {
 
+    private int show = View.VISIBLE; // 标题栏是否可见
+
     private int backIcon; // 返回按钮
 
-    private int backShow;
+    private int backShow; // 返回按钮是否可见
 
     private int titleBarBackgroundColor; // 标题栏背景色
 
@@ -31,6 +35,7 @@ public class TitleBarConfig {
     public TitleBarConfig() {}
 
     private TitleBarConfig(Builder builder) {
+        setShow(builder.show);
         setBackIcon(builder.backIcon);
         setBackShow(builder.backShow);
         setTitleBarBackgroundColor(builder.titleBarBackgroundColor);
@@ -41,23 +46,6 @@ public class TitleBarConfig {
         setActionTextSize(builder.actionTextSize);
         setActionTextColor(builder.actionTextColor);
         setActions(builder.actions);
-    }
-
-    private TitleBarConfig(TitleBarConfig config) {
-        if(null == config) {
-            return;
-        }
-
-        setBackIcon(config.backIcon);
-        setBackShow(config.backShow);
-        setTitleBarBackgroundColor(config.titleBarBackgroundColor);
-        setTitleText(config.titleText);
-        setTitleTextSize(config.titleTextSize);
-        setTitleTextColor(config.titleTextColor);
-        setTitleTextGravity(config.titleTextGravity);
-        setActionTextSize(config.actionTextSize);
-        setActionTextColor(config.actionTextColor);
-        setActions(config.actions);
     }
 
     public int getBackIcon() {
@@ -140,6 +128,14 @@ public class TitleBarConfig {
         this.actions = actions;
     }
 
+    public int getShow() {
+        return show;
+    }
+
+    public void setShow(int show) {
+        this.show = show;
+    }
+
     public static final class Builder {
         private int backIcon;
         private int backShow;
@@ -151,6 +147,7 @@ public class TitleBarConfig {
         private int actionTextSize;
         private int actionTextColor;
         private List<MenuAction> actions;
+        private int show;
 
         public Builder() {
         }
@@ -207,6 +204,11 @@ public class TitleBarConfig {
 
         public TitleBarConfig build() {
             return new TitleBarConfig(this);
+        }
+
+        public Builder show(int val) {
+            show = val;
+            return this;
         }
     }
 }

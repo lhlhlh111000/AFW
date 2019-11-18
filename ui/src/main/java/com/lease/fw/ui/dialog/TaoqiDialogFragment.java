@@ -1,21 +1,26 @@
-package com.lease.fw.ui.act;
+package com.lease.fw.ui.dialog;
 
+import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.lease.fw.router.Router;
 import com.lease.fw.ui.BuildConfig;
+import com.lease.fw.ui.R;
 import com.lease.fw.ui.UICentre;
+import com.lease.fw.ui.act.ContainerActivity;
 import com.lease.fw.ui.base.BaseViewModel;
-import com.lease.fw.ui.config.StatusBarConfig;
-import com.lease.fw.ui.utils.LightStatusBarUtils;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxAppCompatDialogFragment;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -24,75 +29,53 @@ import java.util.Map;
 import butterknife.ButterKnife;
 
 /**
- * 基础承载页面
- * @param <VM>
+ * created time: 2019-11-15
+ * author: cqt
+ * description: 基础对话框
  */
-public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompatActivity {
+public abstract class TaoqiDialogFragment<VM extends BaseViewModel> extends RxAppCompatDialogFragment {
 
     protected VM viewModel;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.TQDialog);
         if(BuildConfig.isRouter) {
             Router.initParam(this);
         }
-        this.initStatusBar();
         this.initViewModel();
-        if(obtainContentLayout() > 0) {
-            setContentView(obtainContentLayout());
-        }
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if(BuildConfig.isRouter) {
-            Router.initParam(this);
-        }
+    public void onStart() {
+        super.onStart();
+        setupDialog(getDialog());
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(obtainContentLayout(), container, false);
     }
 
     @Override
-    public void setContentView(View view) {
-        super.setContentView(view);
-        doInit();
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        doInit();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getLifecycle().removeObserver(viewModel);
-    }
-
-    private void initStatusBar() {
-        StatusBarConfig statusBarConfig = null;
-        if(null == buildStatusBarConfig()) {
-            statusBarConfig = UICentre.getInstance().getUiConfig().getStatusBarConfig();
-        }
-        if(null == statusBarConfig) {
-            return;
-        }
-
-        if(statusBarConfig.isLightStatus()) {
-            LightStatusBarUtils.setLightStatusBar(this);
-        }
-    }
-
-    private void doInit() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if(BuildConfig.isButterKnife) {
-            ButterKnife.bind(this);
+            ButterKnife.bind(this, view);
         }
         this.registerUIChangeLiveDataCallBack();
         this.initParams();
         this.setupView();
         this.initViewObservable();
         this.initData();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getLifecycle().removeObserver(viewModel);
     }
 
     private void initViewModel() {
@@ -106,7 +89,7 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
                 modelClass = BaseViewModel.class;
             }
 
-            this.viewModel = (VM) this.createViewModel(this, modelClass);
+            this.viewModel = (VM) this.createViewModel(getActivity(), modelClass);
         }
 
         if(null == this.viewModel) {
@@ -116,15 +99,6 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
         getLifecycle().addObserver(viewModel);
         viewModel.injectLifecycleProvider(this);
     }
-
-
-    // 状态栏部分
-    protected StatusBarConfig buildStatusBarConfig() {
-        return null;
-    }
-
-
-
 
     // 业务相关
     /**
@@ -139,12 +113,18 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
     }
 
     /**
+     * 设置对话框样式
+     * @param dialog
+     */
+    protected void setupDialog(Dialog dialog) {}
+
+    /**
      * 参数初始化
      */
     protected void initParams() {}
 
     /**
-     * 初始化数据模型，可不重写
+     * 初始化数据模型
      * @return 数据模型
      */
     protected VM setupViewModel() {return null;}
@@ -169,7 +149,6 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
      * 数据初始化
      */
     protected void initData() {}
-
 
 
     //注册ViewModel与View的契约UI回调事件
@@ -210,16 +189,28 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
         viewModel.getUC().getFinishEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                finish();
+                getActivity().finish();
             }
         });
         //关闭上一层
         viewModel.getUC().getOnBackPressedEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                onBackPressed();
+                getActivity().onBackPressed();
             }
         });
+    }
+
+    public void onBackPressed() {
+        if(null != getActivity() && !getActivity().isFinishing()) {
+            getActivity().onBackPressed();
+        }
+    }
+
+    public void finish() {
+        if(null != getActivity() && !getActivity().isFinishing()) {
+            getActivity().finish();
+        }
     }
 
     public void showDialog() {
@@ -230,7 +221,7 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
         UICentre.getInstance()
                 .getUiConfig()
                 .getLoadingDialogConfig()
-                .showLoadingDialog(this, title);
+                .showLoadingDialog(getActivity(), title);
     }
 
     public void dismissDialog() {
@@ -246,7 +237,7 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
      * @param clz 所跳转的目的Activity类
      */
     public void startActivity(Class<?> clz) {
-        startActivity(new Intent(this, clz));
+        startActivity(new Intent(getActivity(), clz));
     }
 
     /**
@@ -256,7 +247,7 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
      * @param bundle 跳转所携带的信息
      */
     public void startActivity(Class<?> clz, Bundle bundle) {
-        Intent intent = new Intent(this, clz);
+        Intent intent = new Intent(getActivity(), clz);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
@@ -279,7 +270,7 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
      * @param bundle        跳转所携带的信息
      */
     public void startContainerActivity(String canonicalName, Bundle bundle) {
-        Intent intent = new Intent(this, ContainerActivity.class);
+        Intent intent = new Intent(getActivity(), ContainerActivity.class);
         intent.putExtra(ContainerActivity.F_NAME, canonicalName);
         if (bundle != null) {
             intent.putExtra(ContainerActivity.F_BUNDLE, bundle);

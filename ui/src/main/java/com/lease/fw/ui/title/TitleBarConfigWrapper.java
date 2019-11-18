@@ -18,6 +18,11 @@ public class TitleBarConfigWrapper {
         this.mutableLiveData = mutableLiveData;
     }
 
+    public void show(int show) {
+        titleBarConfig.setShow(show);
+        update();
+    }
+
     public void setBackIcon(int backIcon) {
         titleBarConfig.setBackIcon(backIcon);
         update();
