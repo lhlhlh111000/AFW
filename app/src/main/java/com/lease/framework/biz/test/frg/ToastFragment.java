@@ -5,6 +5,7 @@ import android.view.View;
 import com.lease.framework.biz.test.R;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.frg.TitleFragment;
+import com.lease.fw.ui.title.DefaultTitleBarView;
 import com.lease.fw.ui.toast.ToastUtil;
 
 /**
@@ -12,7 +13,7 @@ import com.lease.fw.ui.toast.ToastUtil;
  * author: cqt
  * description:
  */
-public class ToastFragment extends TitleFragment<BaseViewModel> {
+public class ToastFragment extends TitleFragment<BaseViewModel, DefaultTitleBarView> {
 
     private int count = 0;
 

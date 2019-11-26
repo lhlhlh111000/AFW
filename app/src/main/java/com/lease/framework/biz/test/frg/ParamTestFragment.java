@@ -8,6 +8,7 @@ import com.lease.framework.biz.test.R;
 import com.lease.fw.router.param.BindParam;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.frg.TitleFragment;
+import com.lease.fw.ui.title.DefaultTitleBarView;
 import com.lease.fw.ui.toast.ToastUtil;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  * author: cqt
  * description: 参数传递测试
  */
-public class ParamTestFragment extends TitleFragment<BaseViewModel> {
+public class ParamTestFragment extends TitleFragment<BaseViewModel, DefaultTitleBarView> {
 
     @BindParam("message")
     public String msg = "";

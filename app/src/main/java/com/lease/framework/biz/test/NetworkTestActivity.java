@@ -7,11 +7,12 @@ import com.lease.framework.network.RetrofitClient;
 import com.lease.framework.task.RxUtils;
 import com.lease.fw.ui.act.TitleActivity;
 import com.lease.fw.ui.base.BaseViewModel;
+import com.lease.fw.ui.title.DefaultTitleBarView;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class NetworkTestActivity extends TitleActivity<BaseViewModel> {
+public class NetworkTestActivity extends TitleActivity<BaseViewModel, DefaultTitleBarView> {
 
     @Override
     protected int obtainContentLayout() {

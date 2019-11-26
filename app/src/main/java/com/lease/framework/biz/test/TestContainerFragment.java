@@ -2,8 +2,9 @@ package com.lease.framework.biz.test;
 
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.frg.TitleFragment;
+import com.lease.fw.ui.title.DefaultTitleBarView;
 
-public class TestContainerFragment extends TitleFragment<BaseViewModel> {
+public class TestContainerFragment extends TitleFragment<BaseViewModel, DefaultTitleBarView> {
 
     @Override
     protected int obtainContentLayout() {

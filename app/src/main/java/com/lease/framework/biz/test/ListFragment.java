@@ -10,12 +10,13 @@ import android.widget.TextView;
 
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.frg.TitleFragment;
+import com.lease.fw.ui.title.DefaultTitleBarView;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
-public class ListFragment extends TitleFragment<BaseViewModel> {
+public class ListFragment extends TitleFragment<BaseViewModel, DefaultTitleBarView> {
 
     private int count = 20;
 

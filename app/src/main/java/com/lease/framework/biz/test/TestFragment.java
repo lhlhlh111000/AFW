@@ -6,11 +6,12 @@ import android.support.v7.app.AlertDialog;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.config.MenuAction;
 import com.lease.fw.ui.frg.TitleFragment;
+import com.lease.fw.ui.title.DefaultTitleBarView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestFragment extends TitleFragment<BaseViewModel> {
+public class TestFragment extends TitleFragment<BaseViewModel, DefaultTitleBarView> {
 
     @Override
     protected int obtainContentLayout() {
@@ -18,7 +19,10 @@ public class TestFragment extends TitleFragment<BaseViewModel> {
     }
 
     @Override
-    public List<MenuAction> buildMenuActions() {
+    protected void setupView() {
+        super.setupView();
+        setTitle("测试标题");
+
         List<MenuAction> actions = new ArrayList<>();
         actions.add(new MenuAction(R.mipmap.icon_saoyisaotext_blank, R.string.scan) {
             @Override
@@ -36,13 +40,7 @@ public class TestFragment extends TitleFragment<BaseViewModel> {
 
             }
         });
-        return actions;
-    }
-
-    @Override
-    protected void setupView() {
-        super.setupView();
-        setTitle("测试标题");
+        titleBarView.setupMenuActions(actions);
     }
 
     private void showAlertDialog() {

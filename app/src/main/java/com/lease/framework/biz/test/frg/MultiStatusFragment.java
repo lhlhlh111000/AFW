@@ -7,13 +7,14 @@ import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.frg.TitleFragment;
 import com.lease.fw.ui.status.OnReloadListener;
 import com.lease.fw.ui.status.StatusDelegate;
+import com.lease.fw.ui.title.DefaultTitleBarView;
 
 /**
  * created time: 2019-11-11
  * author: cqt
  * description:
  */
-public class MultiStatusFragment extends TitleFragment<BaseViewModel> {
+public class MultiStatusFragment extends TitleFragment<BaseViewModel, DefaultTitleBarView> {
 
     private StatusDelegate statusDelegate;
 
