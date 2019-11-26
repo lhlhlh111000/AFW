@@ -62,7 +62,7 @@ public class RetrofitClient {
                 .build();
     }
 
-    private String obtainBaseUrl(Class apiService) {
+    public String obtainBaseUrl(Class apiService) {
         if(null == NetworkCentre.getInstance().getNetworkConfig().getUrlProviders()
                 || NetworkCentre.getInstance().getNetworkConfig().getUrlProviders().size() <= 0) {
             throw new IllegalStateException("Base url providers is null");
