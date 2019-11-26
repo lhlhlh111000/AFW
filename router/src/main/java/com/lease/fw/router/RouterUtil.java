@@ -47,7 +47,7 @@ public class RouterUtil {
         if(clazz.equals(DialogFragment.class)) {
             return true;
         }else if(null != clazz.getSuperclass()) {
-            return isFragment(clazz.getSuperclass());
+            return isDialog(clazz.getSuperclass());
         }
         return false;
     }

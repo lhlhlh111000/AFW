@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ParamParser {
 
     private static List<Field> parseField(Class<?> clazz) {
         List<Field> fields = new ArrayList<>();
-        Field[] declaredFields = clazz.getDeclaredFields();
+        Field[] declaredFields = clazz.getFields();
         if(declaredFields.length > 0) {
             for(Field field : declaredFields) {
                 if(field.isAnnotationPresent(BindParam.class)) {
@@ -70,7 +71,7 @@ public class ParamParser {
         try {
             field.set(target, value);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to assign " + value + " to " + field + " on " + target, e);
+            Log.e(ParamParser.class.getSimpleName(), "Unable to assign " + value + " to " + field + " on " + target);
         }
     }
 
