@@ -8,26 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lease.fw.ui.base.BaseViewModel;
-import com.lease.fw.ui.config.MenuAction;
 import com.lease.fw.ui.title.ITitleBarAttach;
-import com.lease.fw.ui.title.TitleBarConfigWrapper;
 import com.lease.fw.ui.title.TitleBarDelegate;
-
-import java.util.List;
+import com.lease.fw.ui.title.TitleBarView;
 
 /**
  * 带标题的基础Fragment
  * @param <VM>
  */
-public abstract class TitleFragment<VM extends BaseViewModel>
+public abstract class TitleFragment<VM extends BaseViewModel, TB extends TitleBarView>
         extends TaoqiFragment<VM> implements ITitleBarAttach {
 
-    private TitleBarDelegate<VM> delegate;
+    private TitleBarDelegate<VM, TB> delegate;
+
+    protected TB titleBarView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        delegate = new TitleBarDelegate<VM>(this);
+        delegate = new TitleBarDelegate<>(this);
     }
 
     @Override
@@ -46,6 +45,7 @@ public abstract class TitleFragment<VM extends BaseViewModel>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         delegate.initTitleBar(getActivity(), this, viewModel);
+        titleBarView = delegate.getTitleBarView();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -60,22 +60,12 @@ public abstract class TitleFragment<VM extends BaseViewModel>
     }
 
     @Override
-    public List<MenuAction> buildMenuActions() {
-        return null;
-    }
-
-    @Override
     public void setTitle(int titleRes) {
-        setTitle(getString(titleRes));
+        titleBarView.setTitle(titleRes);
     }
 
     @Override
     public void setTitle(String titleStr) {
-        getTitleBarConfig().setTitleText(titleStr);
-    }
-
-    @Override
-    public TitleBarConfigWrapper getTitleBarConfig() {
-        return delegate.getTitleBarConfig();
+        titleBarView.setTitle(titleStr);
     }
 }

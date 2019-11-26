@@ -16,6 +16,8 @@ import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.config.MenuAction;
 import com.lease.fw.ui.config.TitleBarConfig;
 
+import java.util.List;
+
 public class DefaultTitleBarView extends TitleBarView {
 
     public DefaultTitleBarView(Context context) {
@@ -33,8 +35,25 @@ public class DefaultTitleBarView extends TitleBarView {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
         setupStyle();
+    }
+
+    @Override
+    public void setTitle(int titleRes) {
+        setTitle(getContext().getText(titleRes).toString());
+    }
+
+    @Override
+    public void setTitle(String titleStr) {
+        if (TextUtils.isEmpty(titleStr)) {
+            return;
+        }
+        TextView tvTitle = findViewById(R.id.tv_title);
+        if(null == tvTitle) {
+            return;
+        }
+
+        tvTitle.setText(titleStr);
     }
 
     @Override
@@ -98,6 +117,39 @@ public class DefaultTitleBarView extends TitleBarView {
                 actionView.setupConfig(titleBarConfig, action);
                 linActions.addView(actionView, actionBarSize, LinearLayout.LayoutParams.MATCH_PARENT);
             }
+        }
+    }
+
+    /**
+     * 显示隐藏返回按钮
+     * @param visible
+     */
+    public void showOrHideBack(int visible) {
+        ImageView ivBack = findViewById(R.id.iv_back);
+        if(null == ivBack) {
+            return;
+        }
+
+        ivBack.setVisibility(visible);
+    }
+
+    /**
+     * 设置右侧菜单
+     * @param menuActions
+     */
+    public void setupMenuActions(List<MenuAction> menuActions) {
+        LinearLayout linActions = findViewById(R.id.lin_actions);
+        linActions.removeAllViews();
+        if(null == menuActions || menuActions.size() <= 0) {
+            return;
+        }
+        TypedValue typedValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true);
+        int actionBarSize = (int) typedValue.getDimension(getContext().getResources().getDisplayMetrics());
+        for(MenuAction action : menuActions) {
+            MenuActionView actionView = (MenuActionView) LayoutInflater.from(getContext()).inflate(R.layout.menu_action, null);
+            actionView.setupConfig(titleBarConfig, action);
+            linActions.addView(actionView, actionBarSize, LinearLayout.LayoutParams.MATCH_PARENT);
         }
     }
 }

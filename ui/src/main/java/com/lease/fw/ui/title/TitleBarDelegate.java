@@ -2,9 +2,6 @@ package com.lease.fw.ui.title;
 
 import android.app.Activity;
 import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -16,15 +13,13 @@ import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.config.TitleBarConfig;
 
-public class TitleBarDelegate<VM extends BaseViewModel> {
+public class TitleBarDelegate<VM extends BaseViewModel, TB extends TitleBarView> {
 
     private ITitleBarAttach titleBarAttach;
 
     private View rootView;
 
-    private TitleBarView titleBarView;
-
-    private MutableLiveData<TitleBarConfig> titleBarConfig = new MutableLiveData<>();
+    private TB titleBarView;
 
     public TitleBarDelegate(ITitleBarAttach iTitleBarAttach) {
         if(null == iTitleBarAttach) {
@@ -73,40 +68,24 @@ public class TitleBarDelegate<VM extends BaseViewModel> {
 
         // 获取titleBar view
         if(titleBarAttach.obtainTitleBarLayout() <= 0) {
-            titleBarView = (TitleBarView) toolbar.getChildAt(0);
+            titleBarView = (TB) toolbar.getChildAt(0);
         }else {
             // 设置自定义TitleBarView
             toolbar.removeAllViews();
-            titleBarView = (TitleBarView) LayoutInflater.from(rootView.getContext()).inflate(titleBarAttach.obtainTitleBarLayout(), null);
+            titleBarView = (TB) LayoutInflater.from(rootView.getContext()).inflate(titleBarAttach.obtainTitleBarLayout(), null);
             toolbar.addView(titleBarView, Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT);
         }
 
-        // 配置标题栏
-        if(null == titleBarConfig.getValue()) {
-            titleBarConfig.setValue(UICentre.getInstance().getUiConfig().getTitleBarConfig());
-        }
-        // 右侧菜单栏
-        TitleBarConfig config = titleBarConfig.getValue();
-        config.setActions(titleBarAttach.buildMenuActions());
-
         // 构建菜单栏
-        titleBarView.setupTitleBarConfig(config, viewModel);
-        titleBarConfig.observe(owner, new Observer<TitleBarConfig>() {
-            @Override
-            public void onChanged(@Nullable TitleBarConfig config) {
-                TitleBarConfig config1 = titleBarConfig.getValue();
-                config1.setActions(titleBarAttach.buildMenuActions());
-                titleBarView.setupTitleBarConfig(config1, viewModel);
-            }
-        });
+        titleBarView.setupTitleBarConfig(new TitleBarConfig(UICentre.getInstance().getUiConfig().getTitleBarConfig()), viewModel);
     }
 
     /**
-     * 获取菜单配置
-     * @return 菜单配置
+     * 菜单View获取
+     * @return
      */
-    public TitleBarConfigWrapper getTitleBarConfig() {
-        return new TitleBarConfigWrapper(titleBarConfig.getValue(), titleBarConfig);
+    public TB getTitleBarView() {
+        return titleBarView;
     }
 
     /**
@@ -115,7 +94,6 @@ public class TitleBarDelegate<VM extends BaseViewModel> {
     public void destroy() {
         rootView = null;
         titleBarView = null;
-        titleBarConfig = null;
         titleBarAttach = null;
     }
 }

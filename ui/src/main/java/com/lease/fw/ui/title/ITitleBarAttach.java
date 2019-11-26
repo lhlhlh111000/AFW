@@ -1,9 +1,5 @@
 package com.lease.fw.ui.title;
 
-import com.lease.fw.ui.config.MenuAction;
-
-import java.util.List;
-
 public interface ITitleBarAttach {
 
     /**
@@ -17,18 +13,6 @@ public interface ITitleBarAttach {
      * @return 自定义布局资源id
      */
     int obtainTitleBarLayout();
-
-    /**
-     * 构建右侧菜单列表
-     * @return 菜单列表
-     */
-    List<MenuAction> buildMenuActions();
-
-    /**
-     * 获取菜单配置
-     * @return 菜单配置
-     */
-    TitleBarConfigWrapper getTitleBarConfig();
 
     /**
      * 设置标题

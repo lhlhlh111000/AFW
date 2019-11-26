@@ -73,7 +73,11 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
             Type type = this.getClass().getGenericSuperclass();
             Class modelClass;
             if (type instanceof ParameterizedType) {
-                modelClass = (Class)((ParameterizedType)type).getActualTypeArguments()[0];
+                if(((ParameterizedType)type).getActualTypeArguments()[0] instanceof Class) {
+                    modelClass = (Class)((ParameterizedType)type).getActualTypeArguments()[0];
+                }else {
+                    modelClass = BaseViewModel.class;
+                }
             } else {
                 modelClass = BaseViewModel.class;
             }
@@ -195,6 +199,10 @@ public abstract class TaoqiFragment<VM extends BaseViewModel> extends RxFragment
         if(null != getActivity() && !getActivity().isFinishing()) {
             getActivity().finish();
         }
+    }
+
+    public boolean interceptBackPressed() {
+        return false;
     }
 
     public void showDialog() {

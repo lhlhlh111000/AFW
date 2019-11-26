@@ -14,7 +14,7 @@ public class TitleBarConfig {
 
     private int backIcon; // 返回按钮
 
-    private int backShow; // 返回按钮是否可见
+    private int backShow = View.VISIBLE; // 返回按钮是否可见
 
     private int titleBarBackgroundColor; // 标题栏背景色
 
@@ -33,6 +33,20 @@ public class TitleBarConfig {
     private List<MenuAction> actions = new ArrayList<>(); // 右侧菜单栏，不建议大于2个
 
     public TitleBarConfig() {}
+
+    public TitleBarConfig(TitleBarConfig builder) {
+        setShow(builder.show);
+        setBackIcon(builder.backIcon);
+        setBackShow(builder.backShow);
+        setTitleBarBackgroundColor(builder.titleBarBackgroundColor);
+        setTitleText(builder.titleText);
+        setTitleTextSize(builder.titleTextSize);
+        setTitleTextColor(builder.titleTextColor);
+        setTitleTextGravity(builder.titleTextGravity);
+        setActionTextSize(builder.actionTextSize);
+        setActionTextColor(builder.actionTextColor);
+        setActions(builder.actions);
+    }
 
     private TitleBarConfig(Builder builder) {
         setShow(builder.show);

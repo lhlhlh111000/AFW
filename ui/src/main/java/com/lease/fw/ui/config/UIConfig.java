@@ -21,7 +21,10 @@ public class UIConfig {
     }
 
     public TitleBarConfig getTitleBarConfig() {
-        return titleBarConfig;
+        if(null == titleBarConfig) {
+            return null;
+        }
+        return new TitleBarConfig(titleBarConfig);
     }
 
     public void setTitleBarConfig(TitleBarConfig titleBarConfig) {

@@ -27,4 +27,8 @@ public abstract class TitleBarView<T extends BaseViewModel> extends RelativeLayo
 
     public abstract void setupTitleBarConfig(TitleBarConfig config, T vm);
 
+    public abstract void setTitle(int titleRes);
+
+    public abstract void setTitle(String titleStr);
+
 }

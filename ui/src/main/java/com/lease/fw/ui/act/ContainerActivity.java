@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.lease.fw.ui.R;
 import com.lease.fw.ui.base.BaseViewModel;
+import com.lease.fw.ui.frg.TaoqiFragment;
 
 /**
  * fragment承载容器
@@ -48,5 +49,18 @@ public class ContainerActivity extends TaoqiActivity<BaseViewModel> {
             return;
         }
         fragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(getIntent().getStringExtra(F_NAME));
+        if(null == fragment) {
+            return;
+        }
+        if(fragment instanceof TaoqiFragment
+                && ((TaoqiFragment) fragment).interceptBackPressed()) {
+            return;
+        }
+        super.onBackPressed();
     }
 }

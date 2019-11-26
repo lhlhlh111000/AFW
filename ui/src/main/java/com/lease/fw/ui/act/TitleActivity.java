@@ -6,25 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.lease.fw.ui.base.BaseViewModel;
-import com.lease.fw.ui.config.MenuAction;
 import com.lease.fw.ui.title.ITitleBarAttach;
-import com.lease.fw.ui.title.TitleBarConfigWrapper;
 import com.lease.fw.ui.title.TitleBarDelegate;
-
-import java.util.List;
+import com.lease.fw.ui.title.TitleBarView;
 
 /**
  * 带标题页面承载, 可根据配置信息进行配置标题属性
  * @param <VM>
  */
-public abstract class TitleActivity<VM extends BaseViewModel>
+public abstract class TitleActivity<VM extends BaseViewModel, TB extends TitleBarView>
         extends TaoqiActivity<VM> implements ITitleBarAttach {
 
-    private TitleBarDelegate<VM> delegate;
+    private TitleBarDelegate<VM, TB> delegate;
+
+    protected TB titleBarView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        delegate = new TitleBarDelegate<VM>(this);
+        delegate = new TitleBarDelegate<>(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -43,6 +42,7 @@ public abstract class TitleActivity<VM extends BaseViewModel>
     @Override
     public void setContentView(View view) {
         delegate.initTitleBar(this, this, viewModel);
+        titleBarView = delegate.getTitleBarView();
         super.setContentView(view);
     }
 
@@ -57,23 +57,13 @@ public abstract class TitleActivity<VM extends BaseViewModel>
     }
 
     @Override
-    public List<MenuAction> buildMenuActions() {
-        return null;
-    }
-
-    @Override
     public void setTitle(String titleStr) {
-        getTitleBarConfig().setTitleText(titleStr);
+        titleBarView.setTitle(titleStr);
     }
 
     @Override
     public void setTitle(int titleId) {
         super.setTitle(titleId);
-        setTitle(getString(titleId));
-    }
-
-    @Override
-    public TitleBarConfigWrapper getTitleBarConfig() {
-        return delegate.getTitleBarConfig();
+        titleBarView.setTitle(titleId);
     }
 }

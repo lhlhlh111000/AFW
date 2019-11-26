@@ -101,7 +101,11 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
             Type type = this.getClass().getGenericSuperclass();
             Class modelClass;
             if (type instanceof ParameterizedType) {
-                modelClass = (Class)((ParameterizedType)type).getActualTypeArguments()[0];
+                if(((ParameterizedType)type).getActualTypeArguments()[0] instanceof Class) {
+                    modelClass = (Class)((ParameterizedType)type).getActualTypeArguments()[0];
+                }else {
+                    modelClass = BaseViewModel.class;
+                }
             } else {
                 modelClass = BaseViewModel.class;
             }
