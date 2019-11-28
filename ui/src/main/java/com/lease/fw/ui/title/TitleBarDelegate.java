@@ -78,6 +78,7 @@ public class TitleBarDelegate<VM extends BaseViewModel, TB extends TitleBarView>
 
         // 构建菜单栏
         titleBarView.setupTitleBarConfig(new TitleBarConfig(UICentre.getInstance().getUiConfig().getTitleBarConfig()), viewModel);
+        toolbar.setBackgroundColor(UICentre.getInstance().getUiConfig().getTitleBarConfig().getTitleBarBackgroundColor());
     }
 
     /**

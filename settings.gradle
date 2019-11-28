@@ -1,1 +1,1 @@
-include ':app', ':ui', ':network', ':task', ':multidex', ':permission', ':router'
+include ':app', ':ui', ':network', ':task', ':multidex', ':permission', ':router', ':core', ':persistence', ':image', ':multi-image-selector'

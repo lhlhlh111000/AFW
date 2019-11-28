@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AutoScrollTextView">
+        <attr name="auto_textSize" format="dimension"/>
+        <attr name="auto_textColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="tip_bubble">
+        <attr name="maxLength" format="integer"/>
+        <attr name="maxLengthMask" format="string"/>
+    </declare-styleable>
+</resources>

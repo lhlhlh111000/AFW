@@ -1,8 +1,12 @@
 package com.lease.framework.task;
 
+import android.app.Activity;
+
 import com.lease.framework.task.core.ErrorTransformer;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -42,5 +46,33 @@ public class RxUtils {
      */
     public static <T> LifecycleTransformer<T> bindToLifecycle(@NonNull LifecycleProvider lifecycle) {
         return lifecycle.bindToLifecycle();
+    }
+
+    /**
+     * 页面结束时结束绑定
+     * @param lifecycle
+     * @param <T>
+     * @return
+     */
+    public static <T> LifecycleTransformer<T> bindToDestroy(@NonNull LifecycleProvider lifecycle) {
+        if(lifecycle instanceof Activity) {
+            return lifecycle.bindUntilEvent(ActivityEvent.DESTROY);
+        }else {
+            return lifecycle.bindUntilEvent(FragmentEvent.DESTROY_VIEW);
+        }
+    }
+
+    /**
+     * 页面暂停时结束绑定
+     * @param lifecycle
+     * @param <T>
+     * @return
+     */
+    public static <T> LifecycleTransformer<T> bindToPause(@NonNull LifecycleProvider lifecycle) {
+        if(lifecycle instanceof Activity) {
+            return lifecycle.bindUntilEvent(ActivityEvent.PAUSE);
+        }else {
+            return lifecycle.bindUntilEvent(FragmentEvent.PAUSE);
+        }
     }
 }

@@ -66,6 +66,8 @@ ext {
             "butterknife"                          : "com.jakewharton:butterknife:8.8.1",
             "butterknife-compiler"                 : "com.jakewharton:butterknife-compiler:8.8.1",
             // BaseRecyclerViewAdapterHelper
-            "BaseRecyclerViewAdapterHelper"        : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50"
+            "BaseRecyclerViewAdapterHelper"        : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50",
+            "fresco"                               : "com.facebook.fresco:fresco:1.3.0",
+            "fresco-gif"                  : "com.facebook.fresco:animated-gif:1.3.0",
     ]
 }

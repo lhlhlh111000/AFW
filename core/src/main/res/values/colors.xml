@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 设计规范颜色 -->
+    <color name="black_A">#303030</color>
+    <color name="black_a">#323232</color>
+    <color name="black_at">#323232</color>
+    <color name="black_b">#888888</color>
+    <color name="black_c">#999999</color>
+    <color name="black_d">#b5b5b5</color>
+    <color name="black_e">#dddddd</color>
+    <color name="black_f">#eeeeee</color>
+    <color name="black_g">#fafafa</color>
+    <color name="black_h">#f5f5f5</color>
+    <color name="black_i">#e5e5e5</color>
+    <color name="black_test">#000000</color>
+
+    <color name="white_a">#ffffff</color>
+    <color name="white_at">#ffffff</color>
+    <color name="white_an">#ffffff</color>
+
+    <color name="red_a">#ff87a0</color>
+    <color name="red_b">#ff5073</color>
+    <color name="red_b_8">#ccff87a0</color>
+    <color name="red_bn">#ff5073</color>
+    <color name="red_bt">#ff5073</color>
+    <color name="red_c">#f03c5f</color>
+    <color name="red_d">#e63b5c</color>
+    <color name="red_e">#fff1f1</color>
+    <color name="red_f">#ffe2ec</color>
+
+    <color name="colour_a">#377ce4</color>
+    <color name="colour_b">#6aaafa</color>
+    <color name="colour_c">#ff8c55</color>
+    <color name="colour_d">#ffa200</color>
+    <color name="colour_e">#c4a27a</color>
+    <color name="colour_f">#10b524</color>
+    <color name="colour_g">#b0d25b</color>
+    <color name="colour_h">#d099d0</color>
+    <color name="colour_i">#ff5073</color>
+    <color name="colour_j">#ffffff</color>
+    <color name="colour_k">#fff9f0</color>
+
+    <color name="colour_l">#3668b2</color>
+    <color name="colour_m">#ff8400</color>
+    <color name="colour_n">#ff6c00</color>
+    <color name="colour_o">#fffb00</color>
+    <color name="colour_p">#00c4a6</color>
+    <color name="colour_q">#b284e6</color>
+
+</resources>

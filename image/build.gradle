@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+//apply from: '../deploy.gradle'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    api rootProject.ext.support['appcompat-v7']
+    api rootProject.ext.dependencies['fresco']
+    api rootProject.ext.dependencies['fresco-gif']
+    testImplementation rootProject.ext.support['junit']
+}
+
+ext {
+    artifactId = IMAGE_ARTIFACT_ID
+    versionName = IMAGE_VERSION
+}

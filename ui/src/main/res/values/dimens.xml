@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="statusbar_view_height">0dp</dimen>
+    <dimen name="title_height">50dip</dimen>
+    <dimen name="titlebar_height">48dip</dimen>
+
+    <!-- dp 值-->
+    <dimen name="dp_value_1">1dp</dimen>
+    <dimen name="dp_value_2">2dp</dimen>
+    <dimen name="dp_value_3">3dp</dimen>
+    <dimen name="dp_value_6">6dp</dimen>
+    <dimen name="dp_value_8">8dp</dimen>
+    <dimen name="dp_value_10">10dp</dimen>
+    <dimen name="dp_value_14">14dp</dimen>
+    <dimen name="dp_value_15">15dp</dimen>
+    <dimen name="dp_value_18">18dp</dimen>
+    <dimen name="dp_value_20">20dp</dimen>
+    <dimen name="dp_value_24">24dp</dimen>
+    <dimen name="dp_value_30">30dp</dimen>
+    <dimen name="dp_value_40">40dp</dimen>
+    <dimen name="dp_value_48">48dp</dimen>
+    <dimen name="dp_value_50">50dp</dimen>
+    <dimen name="dp_value_75">75dp</dimen>
+    <dimen name="dp_value_180">180dp</dimen>
+
+    <!-- sp 值-->
+    <dimen name="text_size_7">7sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_22">22sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="text_size_28">28sp</dimen>
+    <dimen name="text_size_30">30sp</dimen>
+</resources>

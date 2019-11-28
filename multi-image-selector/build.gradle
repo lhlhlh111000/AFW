@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+//apply from: '../deploy.gradle'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    resourcePrefix "mis_"
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.support['appcompat-v7']
+    api project(':image')
+}
+
+ext {
+    artifactId = MULTI_IMAGE_ARTIFACT_ID
+    versionName = MULTI_IMAGE_VERSION
+}

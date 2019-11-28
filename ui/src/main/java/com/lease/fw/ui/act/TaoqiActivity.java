@@ -4,13 +4,18 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.lease.fw.router.Router;
 import com.lease.fw.ui.BuildConfig;
+import com.lease.fw.ui.R;
 import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.base.BaseViewModel;
 import com.lease.fw.ui.config.StatusBarConfig;
@@ -121,13 +126,35 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
         viewModel.injectLifecycleProvider(this);
     }
 
-
     // 状态栏部分
     protected StatusBarConfig buildStatusBarConfig() {
         return null;
     }
 
+    // 设置内容是否延伸到状态栏
+    protected void setupTranslucentStatus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        }
+    }
 
+    protected void wrapperStatusBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        if(null == toolbar) {
+            return;
+        }
+
+        int statusBarHeight = (int) getResources().getDimension(R.dimen.statusbar_view_height);
+        int actionBarHeight = toolbar.getMeasuredHeight();
+        TypedValue tv = new TypedValue();
+        if (getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
+        }
+        toolbar.setPadding(0, statusBarHeight, 0, 0);
+        toolbar.getLayoutParams().height = statusBarHeight + actionBarHeight;
+        toolbar.requestLayout();
+    }
 
 
     // 业务相关

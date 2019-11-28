@@ -45,6 +45,8 @@ dependencies {
     api rootProject.ext.dependencies['BaseRecyclerViewAdapterHelper']
     // router
     compileOnly project(':router')
+
+    api project(':core')
 }
 
 ext {
