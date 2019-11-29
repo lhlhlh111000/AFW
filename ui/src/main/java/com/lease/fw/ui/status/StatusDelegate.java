@@ -14,10 +14,13 @@ public class StatusDelegate {
 
     private MultiStatusView multiStatusView;
 
-    private StatusDelegate() {}
-
-    public StatusDelegate(View needMultiStatusView) {
+    private StatusDelegate(View needMultiStatusView) {
         this.multiStatusView = wrapperStatusView(needMultiStatusView);
+    }
+
+    public static MultiStatusView with(View needMultiStatusView) {
+        StatusDelegate statusDelegate = new StatusDelegate(needMultiStatusView);
+        return statusDelegate.multiStatusView;
     }
 
     public MultiStatusView load(int resId) {
@@ -43,12 +46,6 @@ public class StatusDelegate {
     public MultiStatusView reloadListener(OnReloadListener listener) {
         multiStatusView.reloadListener(listener);
         return multiStatusView;
-    }
-
-    public StatusDelegate build() {
-        multiStatusView.build();
-        showContentView();
-        return this;
     }
 
     public void showContentView() {

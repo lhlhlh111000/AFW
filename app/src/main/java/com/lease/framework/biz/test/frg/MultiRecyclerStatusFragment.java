@@ -38,7 +38,7 @@ public class MultiRecyclerStatusFragment extends TaoqiFragment<BaseViewModel> {
 
         RecyclerView rc = getView().findViewById(R.id.rcv_list);
 
-        statusDelegate = new StatusDelegate(rc).build();
+        statusDelegate = StatusDelegate.with(rc).build();
 
         final BaseQuickAdapter adapter = new AAdapter(R.layout.item_layout);
         adapter.setNewData(getData());

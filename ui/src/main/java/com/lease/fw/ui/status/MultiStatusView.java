@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.lease.fw.ui.R;
+import com.lease.fw.ui.status.skeleton.SkeletonBuilder;
+import com.lease.fw.ui.status.skeleton.SkeletonItem;
 
 /**
  * created time: 2019-11-11
@@ -19,6 +21,8 @@ public class MultiStatusView extends FrameLayout {
     private View contentView;
 
     private int loadLayoutId = R.layout.view_loading;
+
+    private SkeletonBuilder skeletonBuilder;
 
     private int errorLayoutId = R.layout.view_error;
 
@@ -44,6 +48,16 @@ public class MultiStatusView extends FrameLayout {
 
     public MultiStatusView load(int resId) {
         this.loadLayoutId = resId;
+        return this;
+    }
+
+    public MultiStatusView skeleton(SkeletonItem ... items) {
+        skeletonBuilder = SkeletonBuilder.with(items);
+        return this;
+    }
+
+    public MultiStatusView skeleton(int bgColor, int skeletonColor, SkeletonItem ... items) {
+        skeletonBuilder = SkeletonBuilder.with(items).skeletonColor(skeletonColor).backgroudColor(bgColor);
         return this;
     }
 
@@ -99,7 +113,11 @@ public class MultiStatusView extends FrameLayout {
         FrameLayout.LayoutParams params = new FrameLayout
                 .LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         // loadView
-        loadView = inflater.inflate(loadLayoutId, null);
+        if(null != skeletonBuilder) {
+            loadView = skeletonBuilder.build(context);
+        }else {
+            loadView = inflater.inflate(loadLayoutId, null);
+        }
         addView(loadView, params);
 
         // errorView

@@ -27,7 +27,7 @@ public class MultiStatusFragment extends TitleFragment<BaseViewModel, DefaultTit
     protected void setupView() {
         super.setupView();
         View view = getView().findViewById(R.id.lin_status);
-        statusDelegate = new StatusDelegate(view)
+        statusDelegate = StatusDelegate.with(view)
             .reloadListener(new OnReloadListener() {
                 @Override
                 public void reload() {
