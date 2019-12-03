@@ -5,11 +5,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.Gravity;
 
-import com.lease.framework.network.BaseUrlProvider;
-import com.lease.framework.network.DefaultNetworkConfig;
-import com.lease.framework.network.HeaderProvider;
-import com.lease.framework.network.NetworkCentre;
-import com.lease.framework.network.NetworkConfig;
 import com.lease.fw.ui.UICentre;
 import com.lease.fw.ui.config.ToastConfig;
 import com.lease.fw.ui.config.UIConfig;
@@ -22,9 +17,6 @@ import com.scwang.smart.refresh.layout.api.RefreshHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator;
 import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TestApplication extends Application {
 
@@ -52,28 +44,11 @@ public class TestApplication extends Application {
         super.onCreate();
         context = this;
 
-        initNetworkConfig();
         initUIConfig();
     }
 
     public static Context getContext() {
         return context;
-    }
-
-    private void initNetworkConfig() {
-        NetworkConfig networkConfig = new DefaultNetworkConfig();
-
-        List<HeaderProvider> headerProviders = new ArrayList<>();
-        headerProviders.add(new HeaderInfoProvider());
-        headerProviders.add(new HeaderInfo2Provider());
-        networkConfig.setHeaderProviders(headerProviders);
-
-        List<BaseUrlProvider> urlProviders = new ArrayList<>();
-        urlProviders.add(new MallUrlProvider());
-        urlProviders.add(new MallUrl2Provider());
-        networkConfig.setUrlProviders(urlProviders);
-
-        NetworkCentre.getInstance().setNetworkConfig(networkConfig);
     }
 
     private void initUIConfig() {

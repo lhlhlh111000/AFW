@@ -1,7 +1,6 @@
 package com.lease.framework.biz.test;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -60,12 +59,6 @@ public class MainActivity extends TaoqiActivity<BaseViewModel> {
                 Bundle bundle = new Bundle();
                 bundle.putString("hello", "hello");
                 startActivity(TestActivity.class, bundle);
-            }
-        });
-        findViewById(R.id.btn_network).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NetworkTestActivity.class));
             }
         });
         findViewById(R.id.btn_permission).setOnClickListener(new View.OnClickListener() {
