@@ -53,6 +53,7 @@ public abstract class TaoqiActivity<VM extends BaseViewModel> extends RxAppCompa
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if(BuildConfig.isRouter) {
+            setIntent(intent);
             Router.initParam(this);
         }
     }
